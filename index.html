@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The African Network | Connecting Africans to a Brighter Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBrown: '#8B3E2F', // Deep Terracotta from logo
+                        brandGold: '#E59434',  // Golden gradient from Africa icon
+                        brandDark: '#1A0D0A',  // Dark brown/black for text
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white font-sans text-brandDark">
 
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="images/tan.jpeg" alt="Logo" class="h-12 w-auto">
+                <span class="text-xl font-black tracking-tighter text-brandBrown uppercase hidden sm:block">African Network</span>
+            </div>
+            <div class="hidden lg:flex space-x-6 text-xs font-bold uppercase tracking-widest">
+                <a href="scholarships.html" class="hover:text-brandGold transition">Mobility</a>
+                <a href="academy.html" class="hover:text-brandGold transition">Tech</a>
+                <a href="leadership.html" class="hover:text-brandGold transition">Leadership</a>
+                <a href="consulting.html" class="hover:text-brandGold transition">Services</a>
+            </div>
+            <a href="https://wa.me/233501427081" class="text-xs font-bold bg-brandBrown text-white px-5 py-2 rounded shadow-lg hover:bg-brandDark transition">GET STARTED</a>
+        </div>
+    </nav>
+
+    <header class="py-24 px-6 bg-[#FAF9F6] text-center border-b">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 text-brandBrown tracking-tight uppercase">Connecting Africans to a Brighter Future.</h1>
+            <p class="text-xl text-gray-600 mb-10 italic">A premium ecosystem for Scholarship Strategy, Technical Upskilling, and Elite Leadership.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://whatsapp.com/channel/0029Va9EEHEKWEKlwNTNW72L" class="bg-brandDark text-white px-10 py-4 rounded font-bold shadow-xl hover:bg-brandBrown transition">Join 9.5k+ Members</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="p-8 border-l-4 border-brandGold bg-white shadow-sm hover:shadow-md transition">
+            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Scholarships & Jobs</h3>
+            <p class="text-sm text-gray-600 mb-6 font-medium">Strategic roadmaps for global academic and career placement.</p>
+            <a href="scholarships.html" class="text-xs font-black border-b-2 border-brandGold pb-1">EXPLORE ROADMAPS</a>
+        </div>
+
+        <div class="p-8 border-l-4 border-brandBrown bg-white shadow-sm hover:shadow-md transition">
+            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Tech Academy</h3>
+            <p class="text-sm text-gray-600 mb-6 font-medium">AI Web Dev, Cloud Engineering, and Data Science with Python/R.</p>
+            <a href="academy.html" class="text-xs font-black border-b-2 border-brandBrown pb-1 text-brandBrown">LEARN SKILLS</a>
+        </div>
+
+        <div class="p-8 border-l-4 border-brandGold bg-[#FFF9F2] shadow-sm hover:shadow-md transition">
+            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Leadership Lab</h3>
+            <p class="text-sm text-gray-600 mb-6 font-medium">Public Speaking, Persuasion, and Confidence for Adults & Kids.</p>
+            <a href="leadership.html" class="text-xs font-black border-b-2 border-brandGold pb-1">BUILD CONFIDENCE</a>
+        </div>
+
+        <div class="p-8 border-l-4 border-brandDark bg-white shadow-sm hover:shadow-md transition">
+            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Bespoke Services</h3>
+            <p class="text-sm text-gray-600 mb-6 font-medium">1-on-1 SOP auditing, personal branding, and visa simulations.</p>
+            <a href="consulting.html" class="text-xs font-black border-b-2 border-brandDark pb-1 text-brandDark">BOOK CONSULTATION</a>
+        </div>
+
+    </section>
+
+    <footer class="bg-brandDark text-white py-16 px-6">
+        <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-2 gap-10 items-center">
+            <div>
+                <img src="images/tan.jpeg" alt="Logo" class="h-16 w-auto mx-auto md:mx-0 mb-4 rounded">
+                <p class="text-gray-400 text-sm italic">Building the infrastructure for African global success.</p>
+            </div>
+            <div class="md:text-right text-sm space-y-2">
+                <p class="font-bold text-brandGold uppercase">Contact</p>
+                <p>networktheafrican@gmail.com</p>
+                <p>+233 50 142 7081</p>
+            </div>
+        </div>
+        <div class="text-center mt-12 pt-8 border-t border-gray-800 text-[10px] text-gray-500 uppercase tracking-widest">
+            © 2026 The African Network. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

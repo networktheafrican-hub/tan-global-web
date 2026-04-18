@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-Leap Academy | The African Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBrown: '#8B3E2F',
+                        brandGold: '#E59434',
+                        brandDark: '#1A0D0A',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white font-sans text-brandDark">
+
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="images/tan.jpeg" alt="Logo" class="h-10 w-auto">
+                <span class="text-lg font-black tracking-tighter text-brandBrown uppercase hidden sm:block">African Network</span>
+            </a>
+            <div class="hidden lg:flex space-x-6 text-xs font-bold uppercase tracking-widest">
+                <a href="scholarships.html" class="hover:text-brandGold transition">Mobility</a>
+                <a href="academy.html" class="text-brandGold">Tech</a>
+                <a href="leadership.html" class="hover:text-brandGold transition">Leadership</a>
+                <a href="consulting.html" class="hover:text-brandGold transition">Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-20 px-6 bg-brandDark text-white border-b border-brandGold/30">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter">The Tech-Leap Academy</h1>
+            <p class="text-lg text-slate-400 font-light">Advanced Engineering, Econometrics, and Research Automation.</p>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <div class="p-8 border border-slate-200 rounded-xl bg-white">
+                <div class="w-12 h-12 bg-brandGold/10 rounded-lg flex items-center justify-center mb-6 text-brandGold">
+                    <i class="fas fa-server text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase mb-4">Web & Cloud Architecture</h3>
+                <ul class="space-y-4 text-xs font-medium text-gray-600">
+                    <li class="flex items-center"><i class="fas fa-check text-brandGold mr-2"></i> Cloudflare Workers & D1 SQL</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandGold mr-2"></i> GitHub Deployment Pipelines</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandGold mr-2"></i> AI-Assisted UI (Tailwind CSS)</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandGold mr-2"></i> Serverless API Development</li>
+                </ul>
+            </div>
+
+            <div class="p-8 border border-slate-200 rounded-xl bg-[#FAF9F6] shadow-sm">
+                <div class="w-12 h-12 bg-brandBrown/10 rounded-lg flex items-center justify-center mb-6 text-brandBrown">
+                    <i class="fas fa-microchip text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase mb-4 text-brandBrown">Econometrics & Data</h3>
+                <ul class="space-y-4 text-xs font-medium text-gray-700">
+                    <li class="flex items-center"><i class="fas fa-plus text-brandBrown mr-2"></i> **Stata:** Advanced Regression & Panel Data</li>
+                    <li class="flex items-center"><i class="fas fa-plus text-brandBrown mr-2"></i> **MATLAB:** Mathematical Modeling & Sim</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandBrown mr-2"></i> **Python & R:** Research Visualizations</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandBrown mr-2"></i> **SQL:** Big Data Querying & Wrangling</li>
+                </ul>
+            </div>
+
+            <div class="p-8 border border-slate-200 rounded-xl bg-white">
+                <div class="w-12 h-12 bg-brandDark/10 rounded-lg flex items-center justify-center mb-6 text-brandDark">
+                    <i class="fas fa-bolt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase mb-4">Research Automation</h3>
+                <ul class="space-y-4 text-xs font-medium text-gray-600">
+                    <li class="flex items-center"><i class="fas fa-check text-brandDark mr-2"></i> AI Workflow for Lit Reviews</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandDark mr-2"></i> Overleaf & LaTeX for Publications</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandDark mr-2"></i> Web Scraping with Python</li>
+                    <li class="flex items-center"><i class="fas fa-check text-brandDark mr-2"></i> Zotero & API-driven Referencing</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-16 bg-brandBrown text-white px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-2xl font-black uppercase mb-6">Learn from the Frontiers of Research</h2>
+            <p class="text-sm opacity-80 leading-relaxed max-w-2xl mx-auto">We bridge the gap between academic theory and practical industry application. Our syllabus is updated weekly to include the latest in AI-driven data science and serverless engineering.</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 text-center">
+        <h3 class="text-xl font-black mb-8 uppercase tracking-widest">Inquire for Cohort Dates</h3>
+        <a href="https://wa.me/233501427081?text=Tech Academy Inquiry" class="bg-brandDark text-white px-12 py-4 rounded font-bold uppercase tracking-widest hover:bg-brandGold transition shadow-xl">Contact Admissions</a>
+    </section>
+
+    <footer class="bg-brandDark text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">The African Network | Tech-Leap Academy</p>
+            <p class="text-[10px] opacity-30 uppercase tracking-widest">© 2026 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bespoke Consulting | The African Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBrown: '#8B3E2F',
+                        brandGold: '#E59434',
+                        brandDark: '#1A0D0A',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white font-sans text-brandDark">
+
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="images/tan.jpeg" alt="Logo" class="h-10 w-auto">
+                <span class="text-lg font-black tracking-tighter text-brandBrown uppercase hidden sm:block">African Network</span>
+            </a>
+            <div class="hidden lg:flex space-x-6 text-xs font-bold uppercase tracking-widest">
+                <a href="scholarships.html" class="hover:text-brandGold transition">Mobility</a>
+                <a href="academy.html" class="hover:text-brandGold transition">Tech</a>
+                <a href="leadership.html" class="hover:text-brandGold transition">Leadership</a>
+                <a href="consulting.html" class="text-brandGold font-black">Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-24 px-6 bg-[#FAF9F6] text-center border-b border-brandGold/20">
+        <div class="max-w-3xl mx-auto">
+            <span class="text-xs font-black tracking-[0.4em] text-brandGold uppercase mb-4 block">White-Glove Service</span>
+            <h1 class="text-4xl md:text-6xl font-black mb-6 text-brandBrown uppercase tracking-tighter">Bespoke Consulting</h1>
+            <p class="text-lg text-gray-600 italic leading-relaxed">Dedicated 1-on-1 strategy sessions for individuals who require excellence, precision, and guaranteed results.</p>
+        </div>
+    </header>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12">
+            
+            <div class="p-10 border border-slate-100 bg-white shadow-xl rounded-2xl">
+                <h3 class="text-2xl font-black uppercase mb-6 text-brandBrown">The Document Architect</h3>
+                <p class="text-sm text-gray-500 mb-8 leading-relaxed">We don't just "edit" your documents; we re-engineer them. We specialize in crafting high-impact Statements of Purpose (SOP) and CVs that bypass ATS filters and command the attention of admissions committees.</p>
+                <ul class="space-y-4 text-sm mb-10">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-brandGold mr-3"></i> 1-on-1 SOP Strategy Call</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-brandGold mr-3"></i> Full Professional Rewriting & Polish</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-brandGold mr-3"></i> Academic Portfolio Optimization</li>
+                </ul>
+                <a href="https://wa.me/233501427081?text=SOP Architecture Inquiry" class="block w-full text-center py-4 bg-brandBrown text-white font-bold uppercase tracking-widest rounded-lg hover:bg-brandDark transition">Request Audit</a>
+            </div>
+
+            <div class="p-10 border border-brandGold bg-brandDark text-white shadow-2xl rounded-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-brandGold text-brandDark px-4 py-1 text-[10px] font-black uppercase tracking-widest">Premium</div>
+                <h3 class="text-2xl font-black uppercase mb-6 text-brandGold">Elite Mobility Strategy</h3>
+                <p class="text-sm text-slate-400 mb-8 leading-relaxed">Private consulting for the "Japa" journey. This is a complete end-to-end roadmap covering school selection, funding tactics, and visa interview simulations for you and your family.</p>
+                <ul class="space-y-4 text-sm mb-10">
+                    <li class="flex items-center"><i class="fas fa-star text-brandGold mr-3"></i> Personal University Match-Making</li>
+                    <li class="flex items-center"><i class="fas fa-star text-brandGold mr-3"></i> Mock Visa Interview (3 Sessions)</li>
+                    <li class="flex items-center"><i class="fas fa-star text-brandGold mr-3"></i> Post-Admission Settlement Advice</li>
+                </ul>
+                <a href="https://wa.me/233501427081?text=Private Mobility Strategy Inquiry" class="block w-full text-center py-4 bg-brandGold text-brandDark font-bold uppercase tracking-widest rounded-lg hover:bg-white transition">Book Strategy Session</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-50 border-y border-slate-200 px-6 text-center">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl font-black uppercase mb-6 text-brandBrown">PhD & Academic Research Support</h2>
+            <p class="text-sm text-gray-600 mb-10">Are you struggling with data visualization or econometric modeling? We provide technical assistance for Stata, MATLAB, and R to help you produce publication-quality results.</p>
+            <a href="https://wa.me/233501427081?text=Research Support Inquiry" class="font-bold text-brandBrown underline tracking-widest uppercase text-sm">Inquire about Technical Consulting</a>
+        </div>
+    </section>
+
+    <footer class="bg-brandDark text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">The African Network | Private Services</p>
+            <p class="text-[10px] opacity-30 uppercase tracking-widest">© 2026 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

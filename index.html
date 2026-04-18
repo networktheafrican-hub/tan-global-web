@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The African Network | Connecting Africans to a Brighter Future</title>
+    <title>The African Network | Global Mobility & Leadership</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script>
@@ -11,87 +11,111 @@
             theme: {
                 extend: {
                     colors: {
-                        brandBrown: '#8B3E2F', // Deep Terracotta from logo
-                        brandGold: '#E59434',  // Golden gradient from Africa icon
-                        brandDark: '#1A0D0A',  // Dark brown/black for text
+                        brandBrown: '#8B3E2F', 
+                        brandGold: '#E59434',  
+                        brandDark: '#1A0D0A',  
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-white font-sans text-brandDark">
+<body class="bg-[#FAF9F6] font-sans text-brandDark">
 
-    <nav class="bg-white border-b sticky top-0 z-50">
+    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <img src="images/tan.jpeg" alt="Logo" class="h-12 w-auto">
-                <span class="text-xl font-black tracking-tighter text-brandBrown uppercase hidden sm:block">African Network</span>
+            
+            <div class="flex items-center space-x-4">
+                <img src="images/tan.jpeg" alt="Logo" class="h-16 w-16 rounded shadow-md object-cover">
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tighter text-brandBrown uppercase leading-none">The African</span>
+                    <span class="text-sm font-bold tracking-widest text-brandGold uppercase">Network</span>
+                </div>
             </div>
-            <div class="hidden lg:flex space-x-6 text-xs font-bold uppercase tracking-widest">
-                <a href="scholarships.html" class="hover:text-brandGold transition">Mobility</a>
-                <a href="academy.html" class="hover:text-brandGold transition">Tech</a>
-                <a href="leadership.html" class="hover:text-brandGold transition">Leadership</a>
-                <a href="consulting.html" class="hover:text-brandGold transition">Services</a>
+
+            <div class="hidden lg:flex space-x-8 text-[11px] font-black uppercase tracking-[0.2em]">
+                <a href="#mobility" class="hover:text-brandGold transition">Mobility</a>
+                <a href="#bootcamp" class="hover:text-brandGold transition">Bootcamp</a>
+                <a href="#vip" class="hover:text-brandGold transition text-brandBrown border-b-2 border-brandBrown">VIP Circle</a>
+                <a href="#services" class="hover:text-brandGold transition">Consulting</a>
             </div>
-            <a href="https://wa.me/233501427081" class="text-xs font-bold bg-brandBrown text-white px-5 py-2 rounded shadow-lg hover:bg-brandDark transition">GET STARTED</a>
+
+            <div class="hidden sm:block">
+                <a href="https://wa.me/233501427081" class="text-[10px] font-black bg-brandBrown text-white px-6 py-3 rounded hover:bg-brandDark transition uppercase tracking-widest shadow-lg">
+                    Contact Us
+                </a>
+            </div>
+
+            <button id="menu-btn" class="lg:hidden text-brandBrown text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t px-6 py-6 space-y-4 shadow-xl">
+            <a href="#mobility" class="block text-sm font-black uppercase tracking-widest text-brandDark">Global Mobility</a>
+            <a href="#bootcamp" class="block text-sm font-black uppercase tracking-widest text-brandDark">6-Week Bootcamp</a>
+            <a href="#vip" class="block text-sm font-black uppercase tracking-widest text-brandBrown">VIP Inner Circle</a>
+            <a href="#services" class="block text-sm font-black uppercase tracking-widest text-brandDark">Services</a>
+            <hr>
+            <a href="https://wa.me/233501427081" class="block text-center bg-brandGold text-white py-3 rounded font-black uppercase tracking-widest">Join Community</a>
         </div>
     </nav>
 
-    <header class="py-24 px-6 bg-[#FAF9F6] text-center border-b">
+    <header class="py-24 px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-black mb-6 text-brandBrown tracking-tight uppercase">Connecting Africans to a Brighter Future.</h1>
-            <p class="text-xl text-gray-600 mb-10 italic">A premium ecosystem for Scholarship Strategy, Technical Upskilling, and Elite Leadership.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="https://whatsapp.com/channel/0029Va9EEHEKWEKlwNTNW72L" class="bg-brandDark text-white px-10 py-4 rounded font-bold shadow-xl hover:bg-brandBrown transition">Join 9.5k+ Members</a>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 text-brandBrown tracking-tight uppercase leading-[0.9]">
+                Connecting Africans <br> <span class="text-brandDark">to the World.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Strategic mentorship for <strong>Scholarships</strong> and <strong>Global Mobility</strong>. 
+                We turn rejections into admissions.
+            </p>
+            <div class="flex flex-col sm:row justify-center gap-4">
+                <a href="#vip" class="bg-brandBrown text-white px-10 py-5 rounded font-black shadow-2xl hover:bg-brandDark transition uppercase text-xs tracking-widest">Access VIP Circle</a>
+                <a href="#bootcamp" class="bg-white border-2 border-brandDark text-brandDark px-10 py-5 rounded font-black hover:bg-gray-100 transition uppercase text-xs tracking-widest">Enroll in Bootcamp</a>
             </div>
         </div>
     </header>
 
-    <section class="py-20 px-6 max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        <div class="p-8 border-l-4 border-brandGold bg-white shadow-sm hover:shadow-md transition">
-            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Scholarships & Jobs</h3>
-            <p class="text-sm text-gray-600 mb-6 font-medium">Strategic roadmaps for global academic and career placement.</p>
-            <a href="scholarships.html" class="text-xs font-black border-b-2 border-brandGold pb-1">EXPLORE ROADMAPS</a>
-        </div>
+    <section id="vip" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="bg-white p-10 rounded-3xl border-2 border-brandGold shadow-xl">
+                <h3 class="text-2xl font-black uppercase mb-4 text-brandBrown">VIP Inner Circle</h3>
+                <p class="text-gray-500 mb-6 font-medium">Daily premium links & templates for active seekers.</p>
+                <p class="text-4xl font-black mb-8 text-brandDark">50 GHS<span class="text-sm text-gray-400">/mo</span></p>
+                <a href="https://selar.co/YOUR_VIP_LINK" class="block text-center bg-brandGold text-white py-4 rounded-xl font-black uppercase tracking-widest shadow-md">Join VIP</a>
+            </div>
 
-        <div class="p-8 border-l-4 border-brandBrown bg-white shadow-sm hover:shadow-md transition">
-            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Tech Academy</h3>
-            <p class="text-sm text-gray-600 mb-6 font-medium">AI Web Dev, Cloud Engineering, and Data Science with Python/R.</p>
-            <a href="academy.html" class="text-xs font-black border-b-2 border-brandBrown pb-1 text-brandBrown">LEARN SKILLS</a>
+            <div class="bg-brandDark p-10 rounded-3xl text-white shadow-xl">
+                <h3 class="text-2xl font-black uppercase mb-4 text-brandGold">6-Week Global Bootcamp</h3>
+                <p class="text-gray-400 mb-6 font-medium">Intensive roadmap for USA, Canada, UK & Europe.</p>
+                <p class="text-4xl font-black mb-8">350 GHS<span class="text-sm text-gray-500">/one-time</span></p>
+                <a href="https://selar.co/YOUR_BOOTCAMP_LINK" class="block text-center bg-white text-brandDark py-4 rounded-xl font-black uppercase tracking-widest shadow-md">Apply Now</a>
+            </div>
         </div>
-
-        <div class="p-8 border-l-4 border-brandGold bg-[#FFF9F2] shadow-sm hover:shadow-md transition">
-            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Leadership Lab</h3>
-            <p class="text-sm text-gray-600 mb-6 font-medium">Public Speaking, Persuasion, and Confidence for Adults & Kids.</p>
-            <a href="leadership.html" class="text-xs font-black border-b-2 border-brandGold pb-1">BUILD CONFIDENCE</a>
-        </div>
-
-        <div class="p-8 border-l-4 border-brandDark bg-white shadow-sm hover:shadow-md transition">
-            <h3 class="font-black text-lg mb-4 uppercase text-brandBrown">Bespoke Services</h3>
-            <p class="text-sm text-gray-600 mb-6 font-medium">1-on-1 SOP auditing, personal branding, and visa simulations.</p>
-            <a href="consulting.html" class="text-xs font-black border-b-2 border-brandDark pb-1 text-brandDark">BOOK CONSULTATION</a>
-        </div>
-
     </section>
 
-    <footer class="bg-brandDark text-white py-16 px-6">
-        <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-2 gap-10 items-center">
+    <footer class="bg-brandDark text-white py-16 px-6 mt-20">
+        <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-2 gap-10">
             <div>
-                <img src="images/tan.jpeg" alt="Logo" class="h-16 w-auto mx-auto md:mx-0 mb-4 rounded">
-                <p class="text-gray-400 text-sm italic">Building the infrastructure for African global success.</p>
+                <img src="images/tan.jpeg" alt="Logo" class="h-16 w-16 rounded mb-6 mx-auto md:mx-0">
+                <p class="text-gray-400 text-sm tracking-widest uppercase font-bold">The African Network © 2026</p>
             </div>
-            <div class="md:text-right text-sm space-y-2">
-                <p class="font-bold text-brandGold uppercase">Contact</p>
+            <div class="md:text-right space-y-2 text-sm">
+                <p class="text-brandGold font-bold uppercase tracking-widest">Direct Contact</p>
                 <p>networktheafrican@gmail.com</p>
                 <p>+233 50 142 7081</p>
             </div>
         </div>
-        <div class="text-center mt-12 pt-8 border-t border-gray-800 text-[10px] text-gray-500 uppercase tracking-widest">
-            © 2026 The African Network. All Rights Reserved.
-        </div>
     </footer>
+
+    <script>
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 
 </body>
 </html>

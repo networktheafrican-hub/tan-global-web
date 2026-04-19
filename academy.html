@@ -18,6 +18,12 @@
                 }
             }
         }
+
+        // Hamburger Menu Toggle Function
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
     </script>
 </head>
 <body class="bg-white font-sans text-brandDark">
@@ -28,6 +34,7 @@
                 <img src="images/tan.jpeg" alt="Logo" class="h-16 w-auto">
                 <span class="text-lg font-black tracking-tighter text-brandBrown uppercase hidden sm:block">The African Network</span>
             </a>
+
             <div class="hidden lg:flex space-x-6 text-xs font-bold uppercase tracking-widest">
                 <a href="about.html" class="hover:text-brandGold transition">About</a>
                 <a href="scholarships.html" class="hover:text-brandGold transition">Mobility</a>
@@ -35,6 +42,19 @@
                 <a href="leadership.html" class="hover:text-brandGold transition">Leadership</a>
                 <a href="consulting.html" class="hover:text-brandGold transition">Services</a>
             </div>
+
+            <button onclick="toggleMenu()" class="lg:hidden text-brandBrown text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-100 p-6 space-y-4 shadow-inner">
+            <a href="about.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">About</a>
+            <a href="scholarships.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Mobility</a>
+            <a href="academy.html" class="block text-sm font-black uppercase text-brandGold tracking-widest border-b pb-2">Tech Academy</a>
+            <a href="leadership.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Leadership</a>
+            <a href="consulting.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Services</a>
+            <a href="https://wa.me/233501427081" class="block text-center bg-brandBrown text-white py-3 rounded font-bold uppercase text-xs tracking-widest">Enroll Now</a>
         </div>
     </nav>
 

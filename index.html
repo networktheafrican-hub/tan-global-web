@@ -251,12 +251,15 @@
 
     <script>
         // ============================================
-        // EMAILJS CONFIGURATION - ALL WORKING VALUES
+        // CONFIGURATION - ALL WORKING VALUES
         // ============================================
         const EMAILJS_PUBLIC_KEY = 'QqYzVuGWi_c9roU23';
-        const EMAILJS_SERVICE_ID = 'service_xla7duc';  // Updated to the working service
+        const EMAILJS_SERVICE_ID = 'service_xla7duc';
         const EMAILJS_TEMPLATE_ID = 'template_bqlu3rs';
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbww-pIUibTbQ9kZ0p-CIsP4DJlODY0XjKr_lZeXYngt3x5OpkNu4R0wHuRKOvghqcTi/exec';
+        
+        // DIRECT PDF URL - Raw GitHub link (working!)
+        const PDF_URL = 'https://raw.githubusercontent.com/networktheafrican-hub/tan-global-web/main/pdfs/blueprint.pdf';
         // ============================================
         
         let userData = {
@@ -355,24 +358,21 @@
             let leads = JSON.parse(localStorage.getItem('tan_leads') || '[]');
             leads.push({ email: email, newsletter: joinedNewsletter, date: new Date().toISOString(), source: 'Scholarship Blueprint' });
             localStorage.setItem('tan_leads', JSON.stringify(leads));
+            console.log('Saved to localStorage');
         }
         
         function triggerDownload() {
-            const link = document.createElement('a');
-            link.href = '/pdfs/blueprint.pdf';
-            link.download = 'The_African_Network_Scholarship_Blueprint_2026.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Open PDF in new tab
+            window.open(PDF_URL, '_blank');
             showDownloadSuccess();
         }
         
         function showDownloadSuccess() {
             const successDiv = document.createElement('div');
             successDiv.className = 'fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-bounce text-sm font-bold uppercase tracking-widest';
-            successDiv.innerHTML = '<i class="fas fa-download mr-2"></i> Download Started!';
+            successDiv.innerHTML = '<i class="fas fa-file-pdf mr-2"></i> PDF opened in new tab!';
             document.body.appendChild(successDiv);
-            setTimeout(() => successDiv.remove(), 3000);
+            setTimeout(() => successDiv.remove(), 4000);
         }
         
         function isValidEmail(email) {
@@ -401,9 +401,9 @@
             successMsg.className = 'text-green-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-green-50 rounded-lg';
             
             if (emailSent) {
-                successMsg.innerHTML = '<i class="fas fa-envelope mr-1"></i> PDF sent to your inbox! Check your email (and spam folder).';
+                successMsg.innerHTML = '<i class="fas fa-envelope mr-1"></i> PDF link sent to your inbox! Check your email. The PDF is also opening in a new tab.';
             } else {
-                successMsg.innerHTML = '<i class="fas fa-download mr-1"></i> PDF downloading now. Check your downloads folder.';
+                successMsg.innerHTML = '<i class="fas fa-download mr-1"></i> PDF opening in new tab. If nothing happens, check your popup blocker.';
             }
             
             form.appendChild(successMsg);
@@ -431,15 +431,20 @@
                         to_email: email,
                         to_name: email.split('@')[0],
                         from_name: 'Richard Asiamah',
-                        pdf_link: window.location.origin + '/pdfs/blueprint.pdf'
+                        pdf_link: PDF_URL
                     };
                     
-                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams);
+                    const result = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams);
+                    console.log('Email sent:', result);
+                    
+                    // Trigger PDF download
+                    triggerDownload();
                     
                     showSuccessMessage(joinNewsletter, true);
                     document.getElementById('download-form').reset();
                 } catch (error) {
-                    console.error('Error:', error);
+                    console.error('Error details:', error);
+                    // Still try to show PDF even if email fails
                     triggerDownload();
                     showSuccessMessage(joinNewsletter, false);
                 } finally {
@@ -490,7 +495,6 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        // Initialize EmailJS with your public key
         emailjs.init({ publicKey: 'QqYzVuGWi_c9roU23' });
     </script>
 

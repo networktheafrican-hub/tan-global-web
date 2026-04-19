@@ -18,6 +18,12 @@
                 }
             }
         }
+
+        // Hamburger Menu Toggle Function
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
     </script>
 </head>
 <body class="bg-white text-brandDark font-sans">
@@ -28,7 +34,23 @@
                 <img src="images/tan.jpeg" alt="Logo" class="h-16 w-auto rounded">
                 <span class="text-lg font-black text-brandBrown uppercase tracking-tighter">The African Network</span>
             </a>
-            <a href="index.html" class="text-xs font-bold uppercase tracking-widest hover:text-brandGold transition">Back to Home</a>
+            
+            <div class="hidden lg:block">
+                <a href="index.html" class="text-xs font-bold uppercase tracking-widest hover:text-brandGold transition">Back to Home</a>
+            </div>
+
+            <button onclick="toggleMenu()" class="lg:hidden text-brandBrown text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-100 p-6 space-y-4 shadow-inner">
+            <a href="index.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Home</a>
+            <a href="about.html" class="block text-sm font-black uppercase text-brandGold tracking-widest border-b pb-2">About Founder</a>
+            <a href="scholarships.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Mobility</a>
+            <a href="academy.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Tech Academy</a>
+            <a href="leadership.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Leadership</a>
+            <a href="consulting.html" class="block text-sm font-black uppercase text-brandBrown tracking-widest border-b pb-2">Services</a>
         </div>
     </nav>
 

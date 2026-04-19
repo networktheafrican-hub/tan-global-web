@@ -119,7 +119,7 @@
         </div>
     </section>
 
-    <!-- Resource Vault Section with PDF Download & Google Sheets Integration -->
+    <!-- Resource Vault Section with PDF Download -->
     <section id="resource-vault" class="py-20 px-6 bg-[#FAF9F6] border-t border-brandGold/30">
         <div class="max-w-6xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-12 items-center bg-white p-8 md:p-16 rounded-[40px] shadow-2xl border border-brandGold/10">
@@ -251,9 +251,13 @@
 
     <script>
         // ============================================
-        // GOOGLE SHEETS WEB APP URL (YOUR DEPLOYED URL)
+        // EMAILJS CONFIGURATION - ALL WORKING VALUES
         // ============================================
+        const EMAILJS_PUBLIC_KEY = 'QqYzVuGWi_c9roU23';
+        const EMAILJS_SERVICE_ID = 'service_xla7duc';  // Updated to the working service
+        const EMAILJS_TEMPLATE_ID = 'template_bqlu3rs';
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbww-pIUibTbQ9kZ0p-CIsP4DJlODY0XjKr_lZeXYngt3x5OpkNu4R0wHuRKOvghqcTi/exec';
+        // ============================================
         
         let userData = {
             role: '',
@@ -322,10 +326,7 @@
             resultView.classList.remove('hidden');
         }
 
-        // ============================================
-        // GOOGLE SHEETS INTEGRATION - SAVE EMAILS
-        // ============================================
-        
+        // Google Sheets Save Function
         async function saveEmailToGoogleSheets(email, joinedNewsletter) {
             const payload = {
                 email: email,
@@ -335,20 +336,16 @@
             };
             
             try {
-                const response = await fetch(GOOGLE_SHEETS_URL, {
+                await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
-                console.log('Lead saved to Google Sheets:', email);
+                console.log('Saved to Google Sheets:', email);
                 return true;
             } catch (error) {
                 console.error('Google Sheets error:', error);
-                // Fallback to localStorage
                 saveToLocalStorage(email, joinedNewsletter);
                 return false;
             }
@@ -356,19 +353,12 @@
         
         function saveToLocalStorage(email, joinedNewsletter) {
             let leads = JSON.parse(localStorage.getItem('tan_leads') || '[]');
-            leads.push({
-                email: email,
-                newsletter: joinedNewsletter,
-                date: new Date().toISOString(),
-                source: 'Scholarship Blueprint'
-            });
+            leads.push({ email: email, newsletter: joinedNewsletter, date: new Date().toISOString(), source: 'Scholarship Blueprint' });
             localStorage.setItem('tan_leads', JSON.stringify(leads));
-            console.log('Saved to localStorage as backup. Total leads:', leads.length);
         }
         
         function triggerDownload() {
             const link = document.createElement('a');
-            // Update this path to match your actual PDF location
             link.href = '/pdfs/blueprint.pdf';
             link.download = 'The_African_Network_Scholarship_Blueprint_2026.pdf';
             document.body.appendChild(link);
@@ -377,106 +367,96 @@
             showDownloadSuccess();
         }
         
-        async function handleDownload(event) {
-            event.preventDefault();
-            const email = document.getElementById('user-email').value;
-            const joinNewsletter = document.getElementById('join-newsletter').checked;
-            
-            if (email && isValidEmail(email)) {
-                // Show loading state
-                const submitBtn = document.getElementById('submit-btn');
-                const originalText = submitBtn.innerText;
-                submitBtn.innerHTML = '<span class="loading-spinner"></span> SAVING...';
-                submitBtn.disabled = true;
-                
-                // Save email to Google Sheets
-                await saveEmailToGoogleSheets(email, joinNewsletter);
-                
-                // Trigger PDF download
-                triggerDownload();
-                
-                // Show success message
-                showSuccessMessage(joinNewsletter);
-                
-                // Reset form
-                document.getElementById('download-form').reset();
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            } else {
-                showError('Please enter a valid email address');
-            }
+        function showDownloadSuccess() {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-bounce text-sm font-bold uppercase tracking-widest';
+            successDiv.innerHTML = '<i class="fas fa-download mr-2"></i> Download Started!';
+            document.body.appendChild(successDiv);
+            setTimeout(() => successDiv.remove(), 3000);
         }
         
         function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
         
-        function showSuccessMessage(joinedNewsletter) {
+        function showError(message) {
+            const form = document.getElementById('download-form');
+            let errorMsg = document.getElementById('error-message');
+            if (errorMsg) errorMsg.remove();
+            errorMsg = document.createElement('div');
+            errorMsg.id = 'error-message';
+            errorMsg.className = 'text-red-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-red-50 rounded-lg';
+            errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> ' + message;
+            form.appendChild(errorMsg);
+            setTimeout(() => errorMsg.remove(), 3000);
+        }
+        
+        function showSuccessMessage(joinedNewsletter, emailSent) {
             const form = document.getElementById('download-form');
             let successMsg = document.getElementById('success-message');
-            
             if (successMsg) successMsg.remove();
             
             successMsg = document.createElement('div');
             successMsg.id = 'success-message';
             successMsg.className = 'text-green-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-green-50 rounded-lg';
             
-            if (joinedNewsletter) {
-                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF downloading! You\'re now subscribed to scholarship alerts.';
+            if (emailSent) {
+                successMsg.innerHTML = '<i class="fas fa-envelope mr-1"></i> PDF sent to your inbox! Check your email (and spam folder).';
             } else {
-                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF is downloading! Check your downloads folder.';
+                successMsg.innerHTML = '<i class="fas fa-download mr-1"></i> PDF downloading now. Check your downloads folder.';
             }
             
             form.appendChild(successMsg);
-            
-            setTimeout(() => {
-                successMsg.remove();
-            }, 5000);
+            setTimeout(() => successMsg.remove(), 6000);
         }
         
-        function showError(message) {
-            const form = document.getElementById('download-form');
-            let errorMsg = document.getElementById('error-message');
+        // Main handler with EmailJS
+        async function handleDownload(event) {
+            event.preventDefault();
+            const email = document.getElementById('user-email').value;
+            const joinNewsletter = document.getElementById('join-newsletter').checked;
             
-            if (errorMsg) errorMsg.remove();
-            
-            errorMsg = document.createElement('div');
-            errorMsg.id = 'error-message';
-            errorMsg.className = 'text-red-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-red-50 rounded-lg';
-            errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> ' + message;
-            
-            form.appendChild(errorMsg);
-            
-            setTimeout(() => {
-                errorMsg.remove();
-            }, 3000);
+            if (email && isValidEmail(email)) {
+                const submitBtn = document.getElementById('submit-btn');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> SENDING...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Save to Google Sheets
+                    await saveEmailToGoogleSheets(email, joinNewsletter);
+                    
+                    // Send email via EmailJS
+                    const emailParams = {
+                        to_email: email,
+                        to_name: email.split('@')[0],
+                        from_name: 'Richard Asiamah',
+                        pdf_link: window.location.origin + '/pdfs/blueprint.pdf'
+                    };
+                    
+                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams);
+                    
+                    showSuccessMessage(joinNewsletter, true);
+                    document.getElementById('download-form').reset();
+                } catch (error) {
+                    console.error('Error:', error);
+                    triggerDownload();
+                    showSuccessMessage(joinNewsletter, false);
+                } finally {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } else {
+                showError('Please enter a valid email address');
+            }
         }
         
-        function showDownloadSuccess() {
-            const successDiv = document.createElement('div');
-            successDiv.className = 'fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-bounce text-sm font-bold uppercase tracking-widest';
-            successDiv.innerHTML = '<i class="fas fa-download mr-2"></i> Download Started!';
-            document.body.appendChild(successDiv);
-            
-            setTimeout(() => {
-                successDiv.remove();
-            }, 3000);
-        }
-        
-        // Export leads from localStorage (for admin use)
+        // Export leads function
         function exportLeads() {
             const leads = JSON.parse(localStorage.getItem('tan_leads') || '[]');
-            if (leads.length === 0) {
-                alert('No leads saved yet');
-                return;
-            }
-            
+            if (leads.length === 0) { alert('No leads saved yet'); return; }
             let csv = 'Email,Newsletter Opt-in,Date,Source\n';
-            leads.forEach(lead => {
-                csv += `${lead.email},${lead.newsletter},${lead.date},${lead.source}\n`;
-            });
-            
+            leads.forEach(lead => { csv += `${lead.email},${lead.newsletter},${lead.date},${lead.source}\n`; });
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -486,30 +466,41 @@
             URL.revokeObjectURL(url);
         }
         
-        // Make export function available globally
         window.exportLeads = exportLeads;
         
         // Toast functions
         window.onload = function() {
             setTimeout(() => {
                 const toast = document.getElementById('download-toast');
-                if (toast) {
-                    toast.classList.remove('translate-y-40', 'opacity-0');
-                }
+                if (toast) toast.classList.remove('translate-y-40', 'opacity-0');
             }, 5000);
         };
         
         function closeToast() {
             const toast = document.getElementById('download-toast');
-            if (toast) {
-                toast.classList.add('opacity-0');
-            }
+            if (toast) toast.classList.add('opacity-0');
         }
         
         function scrollToVault() {
             document.getElementById('resource-vault').scrollIntoView({ behavior: 'smooth' });
             closeToast();
         }
+    </script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your public key
+        emailjs.init({ publicKey: 'QqYzVuGWi_c9roU23' });
+    </script>
+
+    <!-- Admin shortcut: Ctrl+Shift+L to export leads -->
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                if (typeof exportLeads === 'function') exportLeads();
+            }
+        });
     </script>
 
     <footer class="bg-brandDark text-white py-16 px-6">
@@ -528,17 +519,6 @@
             © 2026 The African Network. All Rights Reserved.
         </div>
     </footer>
-
-    <!-- Admin shortcut: Press Ctrl+Shift+L to export leads -->
-    <script>
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
-                if (typeof exportLeads === 'function') {
-                    exportLeads();
-                }
-            }
-        });
-    </script>
 
 </body>
 </html>

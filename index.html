@@ -96,6 +96,138 @@
         </div>
     </section>
 
+    <!-- Pathfinder Quiz Section -->
+    <section class="py-20 px-6 bg-brandDark text-white overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-brandGold text-xs font-black uppercase tracking-[0.4em] mb-4 block">Personalized Roadmap</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tighter">The Pathfinder Quiz</h2>
+                <p class="text-slate-400 mt-4 italic">Find your exact point of entry into The African Network in 30 seconds.</p>
+            </div>
+
+            <div id="quiz-container" class="bg-white/5 border border-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-sm relative">
+                
+                <div class="w-full bg-white/10 h-1 mb-10 rounded-full overflow-hidden">
+                    <div id="quiz-progress" class="bg-brandGold h-full transition-all duration-500" style="width: 33%"></div>
+                </div>
+
+                <div id="step-1" class="quiz-step">
+                    <h3 class="text-xl font-bold mb-8 text-center uppercase tracking-wide">1. Which best describes you?</h3>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <button onclick="nextStep(2, 'student')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold hover:bg-brandGold/10 transition group text-center">
+                            <i class="fas fa-user-graduate text-2xl mb-4 text-brandGold"></i>
+                            <span class="block text-xs font-black uppercase tracking-widest">Aspiring Student</span>
+                        </button>
+                        <button onclick="nextStep(2, 'researcher')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold hover:bg-brandGold/10 transition group text-center">
+                            <i class="fas fa-microscope text-2xl mb-4 text-brandGold"></i>
+                            <span class="block text-xs font-black uppercase tracking-widest">Active Researcher</span>
+                        </button>
+                        <button onclick="nextStep(2, 'professional')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold hover:bg-brandGold/10 transition group text-center">
+                            <i class="fas fa-briefcase text-2xl mb-4 text-brandGold"></i>
+                            <span class="block text-xs font-black uppercase tracking-widest">Professional</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="step-2" class="quiz-step hidden">
+                    <h3 class="text-xl font-bold mb-8 text-center uppercase tracking-wide">2. What is your primary goal?</h3>
+                    <div id="goals-options" class="grid sm:grid-cols-2 gap-4">
+                    </div>
+                </div>
+
+                <div id="step-3" class="quiz-step hidden">
+                    <h3 class="text-xl font-bold mb-8 text-center uppercase tracking-wide">3. How soon do you want to start?</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <button onclick="showResult('immediate')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold transition text-center uppercase text-xs font-black tracking-widest">Within 3 Months</button>
+                        <button onclick="showResult('planning')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold transition text-center uppercase text-xs font-black tracking-widest">Just Planning Ahead</button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="quiz-step hidden text-center">
+                    <div class="w-20 h-20 bg-brandGold rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-check text-brandDark text-3xl"></i>
+                    </div>
+                    <h3 id="result-title" class="text-2xl font-black uppercase mb-4">Your Roadmap is Ready</h3>
+                    <p id="result-text" class="text-slate-400 mb-8 max-w-md mx-auto"></p>
+                    <a id="result-link" href="#" class="inline-block bg-brandGold text-brandDark px-10 py-4 rounded font-black uppercase tracking-widest hover:bg-white transition text-sm">Access My Track</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let userData = {
+            role: '',
+            goal: '',
+            urgency: ''
+        };
+
+        const goalOptions = {
+            student: [
+                { label: 'Study Abroad (Japa)', val: 'mobility' },
+                { label: 'Learn Tech Skills', val: 'tech' }
+            ],
+            researcher: [
+                { label: 'Data Analysis Support', val: 'data' },
+                { label: 'PhD Application Strategy', val: 'consulting' }
+            ],
+            professional: [
+                { label: 'Leadership Coaching', val: 'leadership' },
+                { label: 'Technical Upskilling', val: 'tech' }
+            ]
+        };
+
+        function nextStep(step, value) {
+            // Save data
+            if(step === 2) {
+                userData.role = value;
+                // Populate Step 2 options
+                const optionsContainer = document.getElementById('goals-options');
+                optionsContainer.innerHTML = '';
+                goalOptions[value].forEach(opt => {
+                    optionsContainer.innerHTML += `
+                        <button onclick="nextStep(3, '${opt.val}')" class="p-6 border border-white/20 rounded-2xl hover:border-brandGold transition text-center uppercase text-xs font-black tracking-widest">${opt.label}</button>
+                    `;
+                });
+                document.getElementById('quiz-progress').style.width = '66%';
+            }
+            if(step === 3) {
+                userData.goal = value;
+                document.getElementById('quiz-progress').style.width = '100%';
+            }
+
+            // Switch View
+            document.querySelectorAll('.quiz-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+        }
+
+        function showResult(urgency) {
+            userData.urgency = urgency;
+            document.querySelectorAll('.quiz-step').forEach(el => el.classList.add('hidden'));
+            const resultView = document.getElementById('quiz-result');
+            const title = document.getElementById('result-title');
+            const text = document.getElementById('result-text');
+            const link = document.getElementById('result-link');
+
+            // Logic to determine destination
+            if (userData.goal === 'mobility' || userData.role === 'student') {
+                title.innerText = "Elite Mobility Track";
+                text.innerText = "Based on your profile, our Mobility Strategy is the best fit to secure your international admission and funding.";
+                link.href = "scholarships.html";
+            } else if (userData.goal === 'tech' || userData.goal === 'data') {
+                title.innerText = "Tech-Leap Academy";
+                text.innerText = "Master Python, R, and technical research tools within our next cohort.";
+                link.href = "academy.html";
+            } else {
+                title.innerText = "Bespoke Consulting";
+                text.innerText = "Work 1-on-1 with Richard to align your research and leadership goals.";
+                link.href = "consulting.html";
+            }
+
+            resultView.classList.remove('hidden');
+        }
+    </script>
+
     <footer class="bg-brandDark text-white py-16 px-6">
         <div class="max-w-7xl mx-auto text-center md:text-left grid md:grid-cols-2 gap-10 items-center">
             <div>

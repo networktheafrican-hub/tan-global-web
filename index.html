@@ -31,6 +31,20 @@
         .animate-bounce {
             animation: bounce 0.5s ease-in-out 2;
         }
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #E59434;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-white font-sans text-brandDark">
@@ -105,7 +119,7 @@
         </div>
     </section>
 
-    <!-- Resource Vault Section with PDF Download -->
+    <!-- Resource Vault Section with PDF Download & Google Sheets Integration -->
     <section id="resource-vault" class="py-20 px-6 bg-[#FAF9F6] border-t border-brandGold/30">
         <div class="max-w-6xl mx-auto">
             <div class="grid lg:grid-cols-2 gap-12 items-center bg-white p-8 md:p-16 rounded-[40px] shadow-2xl border border-brandGold/10">
@@ -123,10 +137,14 @@
                         <div class="flex flex-col sm:flex-row gap-3">
                             <input type="email" id="user-email" placeholder="Enter your email address" required 
                                    class="flex-1 px-6 py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-brandGold text-sm">
-                            <button type="submit" 
+                            <button type="submit" id="submit-btn"
                                     class="bg-brandDark text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-brandBrown transition text-xs whitespace-nowrap">
                                 Send Me The PDF
                             </button>
+                        </div>
+                        <div class="flex items-center gap-3 mt-3">
+                            <input type="checkbox" id="join-newsletter" class="w-4 h-4 rounded border-gray-300 text-brandGold focus:ring-brandGold">
+                            <label for="join-newsletter" class="text-xs text-gray-500">Join our newsletter for exclusive scholarship alerts (optional)</label>
                         </div>
                         <p class="text-[10px] text-gray-400 uppercase tracking-widest">
                             <i class="fas fa-lock mr-1"></i> No spam. Only elite academic opportunities.
@@ -232,6 +250,11 @@
     </div>
 
     <script>
+        // ============================================
+        // GOOGLE SHEETS WEB APP URL (YOUR DEPLOYED URL)
+        // ============================================
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbww-pIUibTbQ9kZ0p-CIsP4DJlODY0XjKr_lZeXYngt3x5OpkNu4R0wHuRKOvghqcTi/exec';
+        
         let userData = {
             role: '',
             goal: '',
@@ -299,9 +322,53 @@
             resultView.classList.remove('hidden');
         }
 
-        // PDF Download Functions
+        // ============================================
+        // GOOGLE SHEETS INTEGRATION - SAVE EMAILS
+        // ============================================
+        
+        async function saveEmailToGoogleSheets(email, joinedNewsletter) {
+            const payload = {
+                email: email,
+                newsletter_opt_in: joinedNewsletter,
+                source: 'Scholarship Blueprint',
+                page: 'Homepage'
+            };
+            
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                console.log('Lead saved to Google Sheets:', email);
+                return true;
+            } catch (error) {
+                console.error('Google Sheets error:', error);
+                // Fallback to localStorage
+                saveToLocalStorage(email, joinedNewsletter);
+                return false;
+            }
+        }
+        
+        function saveToLocalStorage(email, joinedNewsletter) {
+            let leads = JSON.parse(localStorage.getItem('tan_leads') || '[]');
+            leads.push({
+                email: email,
+                newsletter: joinedNewsletter,
+                date: new Date().toISOString(),
+                source: 'Scholarship Blueprint'
+            });
+            localStorage.setItem('tan_leads', JSON.stringify(leads));
+            console.log('Saved to localStorage as backup. Total leads:', leads.length);
+        }
+        
         function triggerDownload() {
             const link = document.createElement('a');
+            // Update this path to match your actual PDF location
             link.href = '/pdfs/blueprint.pdf';
             link.download = 'The_African_Network_Scholarship_Blueprint_2026.pdf';
             document.body.appendChild(link);
@@ -309,27 +376,83 @@
             document.body.removeChild(link);
             showDownloadSuccess();
         }
-
-        function handleDownload(event) {
+        
+        async function handleDownload(event) {
             event.preventDefault();
             const email = document.getElementById('user-email').value;
+            const joinNewsletter = document.getElementById('join-newsletter').checked;
             
-            if (email) {
-                localStorage.setItem('tan_lead_email', email);
+            if (email && isValidEmail(email)) {
+                // Show loading state
+                const submitBtn = document.getElementById('submit-btn');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> SAVING...';
+                submitBtn.disabled = true;
+                
+                // Save email to Google Sheets
+                await saveEmailToGoogleSheets(email, joinNewsletter);
+                
+                // Trigger PDF download
                 triggerDownload();
                 
-                const form = document.getElementById('download-form');
-                const successMsg = document.createElement('div');
-                successMsg.className = 'text-green-600 text-xs font-bold uppercase tracking-widest mt-3 text-center';
-                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF is downloading! Check your downloads folder.';
-                form.appendChild(successMsg);
+                // Show success message
+                showSuccessMessage(joinNewsletter);
                 
-                setTimeout(() => {
-                    successMsg.remove();
-                }, 3000);
+                // Reset form
+                document.getElementById('download-form').reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            } else {
+                showError('Please enter a valid email address');
             }
         }
-
+        
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function showSuccessMessage(joinedNewsletter) {
+            const form = document.getElementById('download-form');
+            let successMsg = document.getElementById('success-message');
+            
+            if (successMsg) successMsg.remove();
+            
+            successMsg = document.createElement('div');
+            successMsg.id = 'success-message';
+            successMsg.className = 'text-green-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-green-50 rounded-lg';
+            
+            if (joinedNewsletter) {
+                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF downloading! You\'re now subscribed to scholarship alerts.';
+            } else {
+                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF is downloading! Check your downloads folder.';
+            }
+            
+            form.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 5000);
+        }
+        
+        function showError(message) {
+            const form = document.getElementById('download-form');
+            let errorMsg = document.getElementById('error-message');
+            
+            if (errorMsg) errorMsg.remove();
+            
+            errorMsg = document.createElement('div');
+            errorMsg.id = 'error-message';
+            errorMsg.className = 'text-red-600 text-xs font-bold uppercase tracking-widest mt-3 text-center p-3 bg-red-50 rounded-lg';
+            errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> ' + message;
+            
+            form.appendChild(errorMsg);
+            
+            setTimeout(() => {
+                errorMsg.remove();
+            }, 3000);
+        }
+        
         function showDownloadSuccess() {
             const successDiv = document.createElement('div');
             successDiv.className = 'fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-bounce text-sm font-bold uppercase tracking-widest';
@@ -340,7 +463,32 @@
                 successDiv.remove();
             }, 3000);
         }
-
+        
+        // Export leads from localStorage (for admin use)
+        function exportLeads() {
+            const leads = JSON.parse(localStorage.getItem('tan_leads') || '[]');
+            if (leads.length === 0) {
+                alert('No leads saved yet');
+                return;
+            }
+            
+            let csv = 'Email,Newsletter Opt-in,Date,Source\n';
+            leads.forEach(lead => {
+                csv += `${lead.email},${lead.newsletter},${lead.date},${lead.source}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'tan_leads_export.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Make export function available globally
+        window.exportLeads = exportLeads;
+        
         // Toast functions
         window.onload = function() {
             setTimeout(() => {
@@ -350,14 +498,14 @@
                 }
             }, 5000);
         };
-
+        
         function closeToast() {
             const toast = document.getElementById('download-toast');
             if (toast) {
                 toast.classList.add('opacity-0');
             }
         }
-
+        
         function scrollToVault() {
             document.getElementById('resource-vault').scrollIntoView({ behavior: 'smooth' });
             closeToast();
@@ -380,6 +528,17 @@
             © 2026 The African Network. All Rights Reserved.
         </div>
     </footer>
+
+    <!-- Admin shortcut: Press Ctrl+Shift+L to export leads -->
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                if (typeof exportLeads === 'function') {
+                    exportLeads();
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>

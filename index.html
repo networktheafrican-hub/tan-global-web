@@ -23,6 +23,15 @@
             menu.classList.toggle('hidden');
         }
     </script>
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+            animation: bounce 0.5s ease-in-out 2;
+        }
+    </style>
 </head>
 <body class="bg-white font-sans text-brandDark">
 
@@ -96,6 +105,58 @@
         </div>
     </section>
 
+    <!-- Resource Vault Section with PDF Download -->
+    <section id="resource-vault" class="py-20 px-6 bg-[#FAF9F6] border-t border-brandGold/30">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center bg-white p-8 md:p-16 rounded-[40px] shadow-2xl border border-brandGold/10">
+                
+                <div>
+                    <span class="inline-block bg-brandGold/10 text-brandGold text-[10px] font-black uppercase tracking-[0.3em] px-4 py-2 rounded-full mb-6">Free Academic Resource</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-brandBrown uppercase tracking-tighter leading-none mb-6">
+                        Download the 2026 Scholarship Blueprint
+                    </h2>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Stop guessing. Get the exact 5-step checklist Richard used to secure full funding in Russia. Includes SOP templates and interview prep tips.
+                    </p>
+                    
+                    <form id="download-form" class="space-y-4" onsubmit="handleDownload(event)">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" id="user-email" placeholder="Enter your email address" required 
+                                   class="flex-1 px-6 py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-brandGold text-sm">
+                            <button type="submit" 
+                                    class="bg-brandDark text-white px-8 py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-brandBrown transition text-xs whitespace-nowrap">
+                                Send Me The PDF
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest">
+                            <i class="fas fa-lock mr-1"></i> No spam. Only elite academic opportunities.
+                        </p>
+                    </form>
+                </div>
+
+                <div class="relative flex justify-center">
+                    <div onclick="triggerDownload()" class="w-64 h-80 bg-brandDark rounded-2xl shadow-2xl relative overflow-hidden border-4 border-brandGold/20 transform rotate-3 hover:rotate-0 transition-transform duration-500 cursor-pointer">
+                        <div class="p-6">
+                            <div class="w-10 h-1 bg-brandGold mb-4"></div>
+                            <p class="text-brandGold font-black text-xl leading-tight uppercase">The 5-Step Checklist</p>
+                            <p class="text-white/40 text-[8px] mt-2 uppercase tracking-widest">Global Mobility Series</p>
+                            <div class="mt-20 space-y-3">
+                                <div class="h-1 w-full bg-white/10"></div>
+                                <div class="h-1 w-full bg-white/10"></div>
+                                <div class="h-1 w-3/4 bg-white/10"></div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-brandGold p-4">
+                            <p class="text-brandDark text-[10px] font-black uppercase text-center">Free Download</p>
+                        </div>
+                    </div>
+                    <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brandGold/5 rounded-full blur-3xl"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Pathfinder Quiz Section -->
     <section class="py-20 px-6 bg-brandDark text-white overflow-hidden">
         <div class="max-w-4xl mx-auto">
@@ -155,6 +216,21 @@
         </div>
     </section>
 
+    <!-- Download Toast Notification -->
+    <div id="download-toast" class="fixed bottom-8 left-8 z-[100] transform translate-y-40 opacity-0 transition-all duration-700 max-w-xs">
+        <div class="bg-brandDark text-white p-5 rounded-2xl shadow-2xl border border-brandGold/30 flex items-start gap-4">
+            <div class="bg-brandGold text-brandDark w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <div>
+                <p class="text-xs font-bold uppercase tracking-tight">New Resource Available</p>
+                <p class="text-[10px] text-slate-400 mt-1 mb-3">Get the 2026 Scholarship Checklist for free.</p>
+                <button onclick="scrollToVault()" class="text-brandGold text-[10px] font-black uppercase tracking-widest underline">Get it now</button>
+            </div>
+            <button onclick="closeToast()" class="text-white/20 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
     <script>
         let userData = {
             role: '',
@@ -178,10 +254,8 @@
         };
 
         function nextStep(step, value) {
-            // Save data
             if(step === 2) {
                 userData.role = value;
-                // Populate Step 2 options
                 const optionsContainer = document.getElementById('goals-options');
                 optionsContainer.innerHTML = '';
                 goalOptions[value].forEach(opt => {
@@ -196,7 +270,6 @@
                 document.getElementById('quiz-progress').style.width = '100%';
             }
 
-            // Switch View
             document.querySelectorAll('.quiz-step').forEach(el => el.classList.add('hidden'));
             document.getElementById(`step-${step}`).classList.remove('hidden');
         }
@@ -209,7 +282,6 @@
             const text = document.getElementById('result-text');
             const link = document.getElementById('result-link');
 
-            // Logic to determine destination
             if (userData.goal === 'mobility' || userData.role === 'student') {
                 title.innerText = "Elite Mobility Track";
                 text.innerText = "Based on your profile, our Mobility Strategy is the best fit to secure your international admission and funding.";
@@ -225,6 +297,70 @@
             }
 
             resultView.classList.remove('hidden');
+        }
+
+        // PDF Download Functions
+        function triggerDownload() {
+            const link = document.createElement('a');
+            link.href = '/pdfs/blueprint.pdf';
+            link.download = 'The_African_Network_Scholarship_Blueprint_2026.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showDownloadSuccess();
+        }
+
+        function handleDownload(event) {
+            event.preventDefault();
+            const email = document.getElementById('user-email').value;
+            
+            if (email) {
+                localStorage.setItem('tan_lead_email', email);
+                triggerDownload();
+                
+                const form = document.getElementById('download-form');
+                const successMsg = document.createElement('div');
+                successMsg.className = 'text-green-600 text-xs font-bold uppercase tracking-widest mt-3 text-center';
+                successMsg.innerHTML = '<i class="fas fa-check-circle mr-1"></i> PDF is downloading! Check your downloads folder.';
+                form.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 3000);
+            }
+        }
+
+        function showDownloadSuccess() {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl z-50 animate-bounce text-sm font-bold uppercase tracking-widest';
+            successDiv.innerHTML = '<i class="fas fa-download mr-2"></i> Download Started!';
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        // Toast functions
+        window.onload = function() {
+            setTimeout(() => {
+                const toast = document.getElementById('download-toast');
+                if (toast) {
+                    toast.classList.remove('translate-y-40', 'opacity-0');
+                }
+            }, 5000);
+        };
+
+        function closeToast() {
+            const toast = document.getElementById('download-toast');
+            if (toast) {
+                toast.classList.add('opacity-0');
+            }
+        }
+
+        function scrollToVault() {
+            document.getElementById('resource-vault').scrollIntoView({ behavior: 'smooth' });
+            closeToast();
         }
     </script>
 
